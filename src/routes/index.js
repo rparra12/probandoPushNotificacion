@@ -24,6 +24,7 @@ router.post('/new-message', async (req, res) =>{
     try {
         for(var i = 0;i<subscriptores.length;i++){
             await webpush.sendNotification(subscriptores[i], payload);
+            res.send(subscriptores[i]);
         }
         
     } catch (error) {

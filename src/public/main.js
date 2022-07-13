@@ -13,6 +13,8 @@ const subscription = async () => {
         applicationServerKey: PUBLIC_VAPID_KEY
     });
 
+    console.log(JSON.stringify(subcription));
+
     await fetch('/subscription', {
         method: 'POST',
         body: JSON.stringify(subcription),
