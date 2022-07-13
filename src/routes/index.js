@@ -8,7 +8,6 @@ let pushSubcription;
 router.post('/subscription', async (req, res) =>{
     pushSubcription = req.body;
     subscriptores.push(pushSubcription);
-    console.log(pushSubcription)
     res.status(200).json();
 });
 
@@ -23,9 +22,9 @@ router.post('/new-message', async (req, res) =>{
 
     try {
         for(var i = 0;i<subscriptores.length;i++){
-            await webpush.sendNotification(subscriptores[i], payload);
-            res.status(200).json({ message: 'ok' });
+            await webpush.sendNotification(subscriptores[i], payload); 
         }
+        return res.send({"name":"GeeksforGeeks"});
         
     } catch (error) {
         console.log(error)

@@ -6,14 +6,11 @@ const subscription = async () => {
     const register = await navigator.serviceWorker.register('/worker.js', {
         scope: '/'
     });
-    console.log("22") 
 
     const subcription= await register.pushManager.subscribe({
         userVisibleOnly: true,
         applicationServerKey: PUBLIC_VAPID_KEY
     });
-
-    console.log(JSON.stringify(subcription));
 
     await fetch('/subscription', {
         method: 'POST',
@@ -21,8 +18,8 @@ const subscription = async () => {
         headers: {
             "Content-type": "application/json"
         }
-    })
-    console.log("Exito")
+    }).then(res => console.log("Llega S"+ JSON.stringify(res)))
+
 }
 
 const form = document.querySelector('#envio');
@@ -39,7 +36,8 @@ form.addEventListener('submit', e =>{
         headers: {
             'Content-Type': 'application/json'
         }
-    })
+    }).then(res => {console.log(res.json())});
+
     form.reset();
 })
 
