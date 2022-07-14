@@ -26,9 +26,9 @@ router.post('/new-message', async (req, res) =>{
     })
 
     try {
-        await webpush.sendNotification(subscriptores, payload); 
+        await webpush.sendNotification(pushSubcription, payload); 
         
-        res.json({ msg: subscriptores })
+        res.json({ msg: pushSubcription })
         
     } catch (error) {
         console.log(error)
