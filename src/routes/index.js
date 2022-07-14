@@ -12,7 +12,6 @@ router.use(cors({
 
 router.post('/subscription', async (req, res) =>{
     pushSubcription = req.body;
-    subscriptores.push(pushSubcription);
     res.status(200).json();
 });
 
@@ -27,11 +26,9 @@ router.post('/new-message', async (req, res) =>{
     })
 
     try {
-        for(var i = 0;i<subscriptores.length;i++){
-            await webpush.sendNotification(subscriptores[i], payload); 
-        }
+        await webpush.sendNotification(subscriptores, payload); 
         
-        res.json({ msg: subscriptores[0] })
+        res.json({ msg: subscriptores })
         
     } catch (error) {
         console.log(error)
