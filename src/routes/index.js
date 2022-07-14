@@ -6,11 +6,7 @@ const subscriptores = [];
 const webpush = require('../webpush');
 let pushSubcription;
 
-router.use(cors({
-    allowedOrigins: [
-        '*'
-    ]
-}));
+router.use(cors());
 
 router.post('/subscription', async (req, res) =>{
     pushSubcription = req.body;
