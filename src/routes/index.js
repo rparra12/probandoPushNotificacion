@@ -1,5 +1,6 @@
 const {Router} = require('express')
 const router = Router();
+var cors = require('cors')
 const subscriptores = [];
 
 const webpush = require('../webpush');
@@ -11,11 +12,8 @@ router.post('/subscription', async (req, res) =>{
     res.status(200).json();
 });
 
-router.post('/new-message', async (req, res) =>{
-    res.header('Access-Control-Allow-Origin', "*");
-   res.header('Access-Control-Allow-Methods', 'POST');
-   res.header("Access-Control-Allow-Headers", "accept, content-type");
-   res.header("Access-Control-Max-Age", "1728000");
+router.post('/new-message', cors(), async (req, res) =>{
+
     console.log(subscriptores);
     const {message} = req.body;
 
