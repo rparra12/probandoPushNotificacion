@@ -2,9 +2,10 @@ const {Router} = require('express')
 const router = Router();
 const cors = require('cors')
 const subscriptores = [];
+let pushSubcription = [];
 
 const webpush = require('../webpush');
-let pushSubcription;
+
 
 router.use(cors({
     origin: '*'
@@ -17,22 +18,35 @@ router.post('/subscription', async (req, res) =>{
 
 router.post('/new-message', async (req, res) =>{
  
-    console.log(subscriptores);
-    const {message} = req.body;
+        const message = req.body;
+        console.log("Hola")
+        console.log(message.sub)
 
-    const payload = JSON.stringify({
-        title: 'Titulo notificacion',
-        message: message
-    })
-
-    try {
-        await webpush.sendNotification(pushSubcription, payload); 
-        
-        res.json({ msg: pushSubcription })
-        
-    } catch (error) {
-        console.log(error)
-    }
+        const payload = JSON.stringify({
+            title: 'Titulo notificacion',
+            message: message.message
+        })
+    
+        try {
+            if(message.sub != undefined){
+                if(message.sub.length>1){
+                    for (var i=0;i<message.sub.length;i++){
+                        await webpush.sendNotification(message.sub[i], payload); 
+                    }
+                }else{
+                    await webpush.sendNotification(message.sub, payload); 
+                }
+                
+                res.json({ msg: message.sub})
+            }else{
+                res.json({ msg: message })
+            }
+                
+        } catch (error) {
+            res.json({ msg: error })
+        }
+    
+    
 })
 
 

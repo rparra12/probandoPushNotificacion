@@ -1,5 +1,6 @@
 const PUBLIC_VAPID_KEY = 'BBoo9vWf710TvujEsmg-n6bFsJZUp3OSUMUQeSCPmYVg_23nBtY-rYM-F82xd_UBGOwN9PqF1-5giEexaHuPqrQ';
 
+let subcription;
 const subscription = async () => {
 
     //ServiceWorker
@@ -7,18 +8,20 @@ const subscription = async () => {
         scope: '/'
     });
 
-    const subcription= await register.pushManager.subscribe({
+    subcription= await register.pushManager.subscribe({
         userVisibleOnly: true,
         applicationServerKey: PUBLIC_VAPID_KEY
     });
 
-    await fetch('/subscription', {
+    console.log(JSON.stringify(subcription));
+
+    /*await fetch('/subscription', {
         method: 'POST',
         body: JSON.stringify(subcription),
         headers: {
             "Content-type": "application/json"
         }
-    }).then(res => console.log("Llega S"+ JSON.stringify(res)))
+    });*/
 
 }
 
@@ -30,9 +33,7 @@ form.addEventListener('submit', e =>{
     e.preventDefault();
     fetch('/new-message', {
         method: 'POST',
-        body: JSON.stringify({
-            message: mensaje.value
-        }),
+        body: JSON.stringify({message: mensaje.value, sub: subcription}),
         headers: {
             'Content-Type': 'application/json'
         }
