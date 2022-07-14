@@ -6,9 +6,11 @@ const subscriptores = [];
 const webpush = require('../webpush');
 let pushSubcription;
 
-option = {
-    origin: '*'
-};
+router.use(cors({
+    allowedOrigins: [
+        '*'
+    ]
+}));
 
 router.post('/subscription', async (req, res) =>{
     pushSubcription = req.body;
@@ -16,7 +18,7 @@ router.post('/subscription', async (req, res) =>{
     res.status(200).json();
 });
 
-router.post('/new-message', cors(option), async (req, res) =>{
+router.post('/new-message', async (req, res) =>{
 
     console.log(subscriptores);
     const {message} = req.body;
