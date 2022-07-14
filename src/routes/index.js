@@ -16,7 +16,7 @@ router.post('/subscription', async (req, res) =>{
 });
 
 router.post('/new-message', async (req, res) =>{
-
+ 
     console.log(subscriptores);
     const {message} = req.body;
 
