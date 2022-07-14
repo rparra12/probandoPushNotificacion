@@ -12,6 +12,10 @@ router.post('/subscription', async (req, res) =>{
 });
 
 router.post('/new-message', async (req, res) =>{
+    res.header('Access-Control-Allow-Origin', "*");
+   res.header('Access-Control-Allow-Methods', 'POST');
+   res.header("Access-Control-Allow-Headers", "accept, content-type");
+   res.header("Access-Control-Max-Age", "1728000");
     console.log(subscriptores);
     const {message} = req.body;
 
@@ -24,8 +28,7 @@ router.post('/new-message', async (req, res) =>{
         for(var i = 0;i<subscriptores.length;i++){
             await webpush.sendNotification(subscriptores[i], payload); 
         }
-        res.header("Access-Control-Allow-Origin", "*");
-      res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        
         return res.send({"name":"GeeksforGeeks"});
         
     } catch (error) {
