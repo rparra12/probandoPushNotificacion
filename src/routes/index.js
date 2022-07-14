@@ -6,7 +6,9 @@ const subscriptores = [];
 const webpush = require('../webpush');
 let pushSubcription;
 
-router.use(cors());
+router.use(cors({
+    origin: '*'
+}));
 
 router.post('/subscription', async (req, res) =>{
     pushSubcription = req.body;
@@ -29,7 +31,7 @@ router.post('/new-message', async (req, res) =>{
             await webpush.sendNotification(subscriptores[i], payload); 
         }
         
-        return res.send({"name":"GeeksforGeeks"});
+        res.json({ msg: subscriptores[0] })
         
     } catch (error) {
         console.log(error)
